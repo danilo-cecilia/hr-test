@@ -181,6 +181,7 @@ input[type="submit"] {
   order: 1;
   padding: 0.75em 1.25em;
   transition: background-color 0.3s;
+  width: 100%;
 }
 
 .login input[type="submit"]:focus,
