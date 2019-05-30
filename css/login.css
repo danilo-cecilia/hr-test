@@ -1,0 +1,83 @@
+/* modules/login.css */
+
+:root {
+  --loginBorderRadius: 0.25em;
+  --loginHeaderBackgroundColor: #282830;
+  --loginInputBorderRadius: 0.25em;
+}
+
+.login__header {
+  background-color: var(--loginHeaderBackgroundColor);
+  border-top-left-radius: var(--loginBorderRadius);
+  border-top-right-radius: var(--loginBorderRadius);
+  color: #fff;
+  padding: 1.5em;
+  text-align: center;
+  text-transform: uppercase;
+}
+
+.login__title {
+  font-size: 1rem;
+  margin: 0;
+}
+
+.login__body {
+  background-color: #fff;
+  padding: 1.5em;
+  position: relative;
+}
+
+.login__body::before {
+  background-color: #fff;
+  content: "";
+  height: 0.5em;
+  left: 50%;
+  margin-left: -0.25em;
+  margin-top: -0.25em;
+  position: absolute;
+  top: 0;
+  transform: rotate(45deg);
+  width: 0.5em;
+}
+
+.login input[type="email"],
+.login input[type="password"] {
+  border: 0.0625em solid #e5e5e5;
+  padding: 1em 1.25em;
+}
+
+.login input[type="email"] {
+  border-top-left-radius: var(--loginInputBorderRadius);
+  border-top-right-radius: var(--loginInputBorderRadius);
+}
+
+.login input[type="password"] {
+  border-bottom-left-radius: var(--loginInputBorderRadius);
+  border-bottom-right-radius: var(--loginInputBorderRadius);
+  border-top: 0;
+}
+
+.login__footer {
+  align-items: center;
+  background-color: #fff;
+  border-bottom-left-radius: var(--loginBorderRadius);
+  border-bottom-right-radius: var(--loginBorderRadius);
+  display: flex;
+  justify-content: space-between;
+  padding-bottom: 1.5em;
+  padding-left: 1.5em;
+  padding-right: 1.5em;
+}
+
+.login__footer p {
+  margin: 0;
+}
+
+input[type="submit"] {
+  cursor: pointer;
+}
+
+.form input[type="email"],
+.form input[type="password"] {
+  width: 100%;
+}

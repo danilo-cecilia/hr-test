@@ -1,0 +1,18 @@
+.container.content {
+    margin-top: 2%;
+    margin-bottom: 2%;
+  }
+
+  .rating {
+    width: 8%;
+    text-align: center;
+  }
+
+  table {
+    background: white;
+  }
+
+  thead {
+    color: #2a5885;
+    background: whitesmoke;
+  }

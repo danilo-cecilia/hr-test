@@ -1,0 +1,14 @@
+.c__button {
+    width: 10% !important;
+}
+
+#questions, #quiz-controls {
+    margin-left: 25%;
+    margin-right: 25%;
+    margin-top: 5%;
+}
+
+#quiz-counter {
+    font-size: 20px;
+    margin-top: 20px;
+}
