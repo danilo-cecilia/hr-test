@@ -22,6 +22,11 @@ if (isset($_POST['username']) and isset($_POST['password'])){
     if ($count == 1){
         $_SESSION['username'] = $username;
         $_SESSION['userid'] = $userRow['userid'];
+        $_SESSION['first_name'] = $userRow['first_name'];
+        $_SESSION['last_name'] = $userRow['last_name'];
+        $_SESSION['email'] = $userRow['email'];
+        $_SESSION['position'] = $userRow['position'];
+        
         if ($userRow['personality'] == '0' && $userRow['bigfive'] == '0' && $userRow['optimism'] == '0') {
             header('Location: thanks.php');
         }

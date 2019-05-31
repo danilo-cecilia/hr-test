@@ -15,10 +15,90 @@ require('dbConnect.php');
 if (isset($_POST) and !empty($_POST)){
   $resultsJSON = json_encode($_POST);
   
-  $resultSQL = "INSERT INTO bigfivescore(userid,answers) VALUES (".$_SESSION["userid"].", '".mysqli_real_escape_string($connection, $resultsJSON)."')";
+  $extroversion = 20 + $_POST['rating'][1] - $_POST['rating'][6] + $_POST['rating'][11] - $_POST['rating'][16] + $_POST['rating'][21] - $_POST['rating'][26] + $_POST['rating'][31] - $_POST['rating'][36] + $_POST['rating'][41] - $_POST['rating'][46];
+  
+  $agreeableness = 14 - $_POST['rating'][2] + $_POST['rating'][7] - $_POST['rating'][12] + $_POST['rating'][17] - $_POST['rating'][22] + $_POST['rating'][27] - $_POST['rating'][32] + $_POST['rating'][37] + $_POST['rating'][42] + $_POST['rating'][47];
+
+  $conscientiousness = 14 + $_POST['rating'][3] - $_POST['rating'][8] + $_POST['rating'][13] - $_POST['rating'][18] + $_POST['rating'][23] - $_POST['rating'][28] + $_POST['rating'][33] - $_POST['rating'][38] + $_POST['rating'][43] + $_POST['rating'][48];
+
+  $neuroticism = 38 - $_POST['rating'][4] + $_POST['rating'][9] - $_POST['rating'][14] + $_POST['rating'][19] - $_POST['rating'][24] - $_POST['rating'][29] - $_POST['rating'][34] - $_POST['rating'][39] - $_POST['rating'][44] - $_POST['rating'][49];
+
+  $openness = 8 + $_POST['rating'][5] - $_POST['rating'][10] + $_POST['rating'][15] - $_POST['rating'][20] + $_POST['rating'][25] - $_POST['rating'][30] + $_POST['rating'][35] + $_POST['rating'][40] + $_POST['rating'][45] + $_POST['rating'][50];
+
+ 
+
+  $resultSQL = "INSERT INTO bigfivescore(userid, extroversion, agreeableness, conscientiousness, neuroticism, openness, answers) VALUES (".$_SESSION["userid"].", $extroversion, $agreeableness, $conscientiousness, $neuroticism, $openness, '".mysqli_real_escape_string($connection, $resultsJSON)."')";
 
   if ($connection->query($resultSQL) === TRUE) {
-      // Send results in an email
+    $inactiveTestSql = "UPDATE user SET bigfive='0' WHERE userid=".$_SESSION["userid"];
+
+    if ($connection->query($inactiveTestSql) === TRUE) {
+        // if all tests done send email to HR
+        $checkTestsQuesry = "SELECT personality, bigfive, optimism FROM user WHERE userid = ".$_SESSION["userid"];
+        $result = mysqli_query($connection, $checkTestsQuesry) or die(mysqli_error($connection));
+        $testStatusArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+        //if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
+        //{
+          $to = 'amrik.jabbal@zenabis.com';
+          $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
+          $resultBody = '';
+          
+          foreach ($_POST['rating'] as $key => $value) {
+            if($key<=25)
+            {
+              $resultBody .= "<tr>
+                              <th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".$value."</td>
+                              <th style='text-align: left;'>".$_POST['question'][$key+25]."</th><td style='text-align: center;margin-right:10px'>".$_POST['rating'][$key+25]."</td>
+                          </tr>";
+            }
+          }
+          $htmlContent = '
+              <html>
+              <head>
+                  <title>Welcome to Zenabis Global Inc.</title>
+              </head>
+              <body>
+                  <h3>Test Results for '.$_SESSION["first_name"].' '.$_SESSION["last_name"].'</h3>
+                  <h3>Applied for the position of '.$_SESSION["position"].'</h3>
+                  <h3>Applicant email id '.$_SESSION["email"].'</h3>
+                  <span><u>Calculated Results - </u></span>< \br>
+                  <span>Extroversion (E) - '.$extroversion.'</span>
+                  <span>Agreeableness (A) - '.$agreeableness.'</span>
+                  <span>Conscientiousness (C) - '.$conscientiousness.'</span>
+                  <span>Neuroticism (N) - '.$neuroticism.'</span>
+                  <span>Openness to Experience (O) - '.$openness.'</span>
+
+                  <table cellspacing="0" style="border: 2px dashed #FB4314; width: auto; height: 200px;">
+                      <tr style="background-color: #e0e0e0;">
+                          <th style="text-align: left;">Questions</th><td style="text-align: right;margin-right:10px">Answers</td>
+                          <th style="text-align: left;">Questions</th><td style="text-align: right;margin-right:10px">Answers</td>
+                      </tr>
+                      '.$resultBody.'
+                  </table>
+              </body>
+              </html>';
+
+          // Set content-type header for sending HTML email
+          $headers = "MIME-Version: 1.0" . "\r\n";
+          $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+          // Additional headers
+          $headers .= 'From: Amrik<amrik.zira@gmail.com>' . "\r\n";
+
+          // Send email
+          if(mail($to,$subject,$htmlContent,$headers))
+          {
+            $successMsg = 'Email has sent successfully.';
+          }
+          else
+          {
+            $errorMsg = 'Email sending fail.';
+            echo $errorMsg;
+          }
+        //}
+    } else {
+        echo "Error updating test: " . $connection->error;
+    }
   } else {
       echo "Error: " . $resultSQL . "<br>" . $connection->error;
   }
@@ -99,7 +179,7 @@ if (isset($_POST) and !empty($_POST)){
                 ?>
                     <tr>
                         <td class="rating">
-                            <select class="form-control" name="rating_<?php echo $bigFiveRows[$i]['tid'];?>">
+                            <select class="form-control" name="rating[<?php echo $bigFiveRows[$i]['tid'];?>]">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -110,9 +190,9 @@ if (isset($_POST) and !empty($_POST)){
                         </td>
 
                         <td><span><?php echo $i+1;echo '. '.$bigFiveRows[$i]['question'];?></span></td>
-                        <input type="hidden" id="question_<?php echo $bigFiveRows[$i]['tid'];?>" name="question_<?php echo $bigFiveRows[$i]['tid'];?>" value="<?php echo $i+1;echo '. '.$bigFiveRows[$i]['question'];?>">
+                        <input type="hidden" id="question_<?php echo $bigFiveRows[$i]['tid'];?>" name="question[<?php echo $bigFiveRows[$i]['tid'];?>]" value="<?php echo $i+1;echo '. '.$bigFiveRows[$i]['question'];?>">
                         <td class="rating">
-                            <select class="form-control" name="rating_<?php echo $bigFiveRows[$k]['tid'];?>">
+                            <select class="form-control" name="rating[<?php echo $bigFiveRows[$k]['tid'];?>]">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -122,7 +202,7 @@ if (isset($_POST) and !empty($_POST)){
                             </select>
                         </td>
                         <td><?php echo $k+1;echo '. '.$bigFiveRows[$k]['question'];?></td>
-                        <input type="hidden" id="question_<?php echo $bigFiveRows[$k]['tid'];?>" name="question_<?php echo $bigFiveRows[$k]['tid'];?>" value="<?php echo $k+1;echo '. '.$bigFiveRows[$k]['question'];?>">
+                        <input type="hidden" id="question_<?php echo $bigFiveRows[$k]['tid'];?>" name="question[<?php echo $bigFiveRows[$k]['tid'];?>]" value="<?php echo $k+1;echo '. '.$bigFiveRows[$k]['question'];?>">
                     </tr>
                 <?php
                 }
