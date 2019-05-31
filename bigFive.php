@@ -1,7 +1,29 @@
 <?php  
 //Start the Session
 session_start();
+if (isset($_SESSION['username'])){
+  $username = $_SESSION['username'];
+  //echo "Hi - " . $username . ", ";
+  //echo "<a href='logout.php'>Logout</a>";
+}
+else
+{
+  header('Location: login.php');
+}
 require('dbConnect.php');
+
+if (isset($_POST) and !empty($_POST)){
+  $resultsJSON = json_encode($_POST);
+  
+  $resultSQL = "INSERT INTO bigfivescore(userid,answers) VALUES (".$_SESSION["userid"].", '".mysqli_real_escape_string($connection, $resultsJSON)."')";
+
+  if ($connection->query($resultSQL) === TRUE) {
+      // Send results in an email
+  } else {
+      echo "Error: " . $resultSQL . "<br>" . $connection->error;
+  }
+  die;
+}
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -40,6 +62,7 @@ require('dbConnect.php');
   </nav>
 
   <div class="container content">
+  <form method="POST">
     <h2 class="card-title">Introduction to The Big Five Personality Test</h2>
     <p class="card-text">
       This is a personality test, it will help you understand why you act the
@@ -57,7 +80,6 @@ require('dbConnect.php');
     <div class="row">
       <div class="col-sm">
         <div class="table-responsive">
-          <form action="/" method="post">
             <table class="table table-bordered">
                 <thead>
                     <tr>
@@ -77,34 +99,37 @@ require('dbConnect.php');
                 ?>
                     <tr>
                         <td class="rating">
-                            <select class="form-control" name="<?php echo $bigFiveRows[$i]['tid'];?>">
+                            <select class="form-control" name="rating_<?php echo $bigFiveRows[$i]['tid'];?>">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
-                                <option value="4">5</option>
+                                <option value="5">5</option>
                             </select>
                         </td>
+
                         <td><span><?php echo $i+1;echo '. '.$bigFiveRows[$i]['question'];?></span></td>
+                        <input type="hidden" id="question_<?php echo $bigFiveRows[$i]['tid'];?>" name="question_<?php echo $bigFiveRows[$i]['tid'];?>" value="<?php echo $i+1;echo '. '.$bigFiveRows[$i]['question'];?>">
                         <td class="rating">
-                            <select class="form-control" name="<?php echo $bigFiveRows[$k]['tid'];?>">
+                            <select class="form-control" name="rating_<?php echo $bigFiveRows[$k]['tid'];?>">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
                                 <option value="3">3</option>
                                 <option value="4">4</option>
-                                <option value="4">5</option>
+                                <option value="5">5</option>
                             </select>
                         </td>
                         <td><?php echo $k+1;echo '. '.$bigFiveRows[$k]['question'];?></td>
+                        <input type="hidden" id="question_<?php echo $bigFiveRows[$k]['tid'];?>" name="question_<?php echo $bigFiveRows[$k]['tid'];?>" value="<?php echo $k+1;echo '. '.$bigFiveRows[$k]['question'];?>">
                     </tr>
                 <?php
                 }
                 ?>
                 </tbody>
             </table>
-          </form>
+          
         </div>
       </div>
     </div>
@@ -113,6 +138,7 @@ require('dbConnect.php');
         <input type="submit" class="c__button" value="SUBMIT" />
       </div>
     </div>
+    </form>
   </div>
 
   <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
