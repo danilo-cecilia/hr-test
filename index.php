@@ -21,6 +21,7 @@ if (isset($_POST['username']) and isset($_POST['password'])){
     
     if ($count == 1){
         $_SESSION['username'] = $username;
+        $_SESSION['userid'] = $userRow['userid'];
         if ($userRow['personality'] == '0' && $userRow['bigfive'] == '0' && $userRow['optimism'] == '0') {
             header('Location: thanks.php');
         }
