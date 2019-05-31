@@ -1,8 +1,16 @@
+.content {
+    border: 1px solid #b3b3b3 !important;
+    border-radius: 8px;
+    padding: 22px;
+    margin-bottom: 5%;
+}
+
 .c__button {
     width: 10% !important;
 }
 
-#questions, #quiz-controls {
+#questions,
+#quiz-controls {
     margin-left: 25%;
     margin-right: 25%;
     margin-top: 5%;
@@ -11,4 +19,86 @@
 #quiz-counter {
     font-size: 20px;
     margin-top: 20px;
+}
+
+#quiz-header {
+    margin-top: 30px;
+    margin-bottom: 30px;
+    text-align: center;
+}
+
+.question {
+    font-size: larger;
+    font-weight: 600;
+    margin-bottom: 10px;
+    margin-top: 10px;
+    border-left: 3px solid #343a40;
+    padding-left: 11px;
+}
+
+
+.container__radio {
+    cursor: pointer;
+    -webkit-user-select: none;
+    -moz-user-select: none;
+    -ms-user-select: none;
+    user-select: none;
+}
+
+.m__left {
+    margin-left: 3% !important;
+}
+
+.btn__padding {
+    padding: 30px;
+}
+
+/* Hide the browser's default radio button */
+.container__radio input {
+    position: absolute;
+    opacity: 0;
+    cursor: pointer;
+}
+
+/* Create a custom radio button */
+.checkmark {
+    position: absolute;
+    top: 0;
+    left: 0;
+    height: 15px;
+    width: 15px;
+    background-color: rgb(148, 148, 148);
+    border-radius: 50%;
+}
+
+/* On mouse-over, add a grey background color */
+.container__radio:hover input~.checkmark {
+    background-color: #ccc;
+}
+
+/* When the radio button is checked, add a blue background */
+.container__radio input:checked~.checkmark {
+    background-color: rgb(148, 148, 148);
+}
+
+/* Create the indicator (the dot/circle - hidden when not checked) */
+.checkmark:after {
+    content: "";
+    position: absolute;
+    display: none;
+}
+
+/* Show the indicator (dot/circle) when checked */
+.container__radio input:checked~.checkmark:after {
+    display: block;
+}
+
+/* Style the indicator (dot/circle) */
+.container__radio .checkmark:after {
+    top: 3px;
+    left: 4px;
+    width: 8px;
+    height: 8px;
+    border-radius: 50%;
+    background: #ffffff;
 }

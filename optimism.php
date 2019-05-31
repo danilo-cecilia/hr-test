@@ -1,10 +1,35 @@
 <?php
 
+//Start the Session
+session_start();
+if (isset($_SESSION['username'])) {
+    $username = $_SESSION['username'];
+    //   echo "Hi - " . $username . ", ";
+    //   echo "<a href='logout.php'>Logout</a>";
+} else {
+    header('Location: index.php');
+}
+
 require('dbConnect.php');
 
-$optimism_query = "SELECT * FROM`optimismqa` ";
+mysqli_set_charset($connection, "utf8");
+$optimism_query = "SELECT * FROM `optimismqa` ";
 $optimism_result = mysqli_query($connection, $optimism_query);
-$optimism_rows = mysqli_num_rows($optimism_result);
+$optimism_num_rows = mysqli_num_rows($optimism_result);
+$optimism_rows = mysqli_fetch_all($optimism_result, MYSQLI_ASSOC);
+
+if (isset($_POST) and !empty($_POST)) {
+    $results_json = json_encode($_POST);
+
+    $save_data = "INSERT INTO optimismscore(userid, answers)
+                  VALUES (" . $_SESSION["userid"] . ", '" . mysqli_real_escape_string($connection, $results_json) . "')";
+
+    if ($connection->query($save_data) === TRUE) {
+        // echo "New record created successfully";
+    } else {
+        echo "Error: " . $save_data . "<br>" . $connection->error;
+    }
+}
 
 ?>
 
@@ -18,56 +43,73 @@ $optimism_rows = mysqli_num_rows($optimism_result);
     <title>Assessment 2</title>
 
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
-    <link rel="stylesheet" href="css/jquery.quiz.css">
+    <!-- <link rel="stylesheet" href="css/jquery.quiz.css"> -->
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/assessment2.css" />
-    <script src="https://code.jquery.com/jquery-1.12.4.min.js"
-        integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous">
+    <script src="https://code.jquery.com/jquery-1.12.4.min.js" integrity="sha384-nvAa0+6Qg9clwYCGGPpDQLVpLNn0fRaROjHqs13t4Ggj3Ez50XnGQqc/r8MhnRDZ" crossorigin="anonymous">
     </script>
 </head>
 
 <body>
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <div class="container">
-            <button class="navbar-toggler" data-toggle="collapse" data-target="#MainNav">
-                <span class="navbar-toggler-icon"></span>
-            </button>
-            <div class="collapse navbar-collapse" id="MainNav">
-                <a href="#" class="navbar-brand">Optimism Test </a>
-                <ul class="navbar-nav">
-                    <li class="nav-item dropdown">
-                        <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Tests</a>
-                        <div class="dropdown-menu">
-                            <a href="bigFive.php" class="dropdown-item">Test 1</a>
-                            <a href="personality.php" class="dropdown-item">Test 2</a>
-                            <a href="optimism.php" class="dropdown-item">Test 3</a>
-                        </div>
-                    </li>
-                </ul>
-            </div>
-        </div>
-    </nav>
-
+    <?php include 'header.php'; ?>
     <div class="container">
-        <div id="quiz">
-            <div id="quiz-header">
-                <h1>Learned Optimism Test</h1>
-            </div>
-            <div class="container">
-                <div class="row">
-                    <div class="col">
-                    </div>
-                    <div class="col">
-                        <div id="quiz-start-screen">
-                            <p>
-                                <a href="#" id="quiz-start-btn" class="c__button">Start</a>
-                            </p>
+        <div id="quiz-header">
+            <h2>Learned Optimism Test</h2>
+        </div>
+        <div class="container content">
+            <?php
+            for ($i = 0; $i < $optimism_num_rows; $i += 2) {
+                ?>
+                <form method="post">
+                    <div class="row">
+                        <div class="col">
+                            <div class="question"><?php printf($optimism_rows[$i]['question']); ?></div>
+                            <div class="form-check m__left">
+                                <label class="container__radio">
+                                    <input class="form-check-input" type="radio" name="q_<?php printf($optimism_rows[$i]['tid']); ?>" id="radio<?php printf($optimism_rows[$i]['tid']); ?>" value="option1">
+                                    <label for="radio<?php printf($optimism_rows[$i]['tid']); ?>">
+                                        <?php printf($optimism_rows[$i]['option1']); ?>
+                                    </label>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-check m__left">
+                                <label class="container__radio">
+                                    <input class="form-check-input" type="radio" name="q_<?php printf($optimism_rows[$i]['tid']); ?>" id="radio<?php printf($optimism_rows[$i]['tid']); ?>" value="option2">
+                                    <label for="radio<?php printf($optimism_rows[$i]['tid']); ?>">
+                                        <?php printf($optimism_rows[$i]['option2']); ?>
+                                    </label>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                        </div>
+                        <div class="col">
+                            <div class="question"><?php printf($optimism_rows[$i + 1]['question']); ?></div>
+                            <div class="form-check m__left">
+                                <label class="container__radio">
+                                    <input class="form-check-input" type="radio" name="q_<?php printf($optimism_rows[$i + 1]['tid']); ?>" id="radio<?php printf($optimism_rows[$i + 1]['tid']); ?>" value="option1">
+                                    <label for="radio<?php printf($optimism_rows[$i + 1]['tid']); ?>">
+                                        <?php printf($optimism_rows[$i + 1]['option1']); ?>
+                                    </label>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
+                            <div class="form-check m__left">
+                                <label class="container__radio">
+                                    <input class="form-check-input" type="radio" name="q_<?php printf($optimism_rows[$i + 1]['tid']); ?>" id="radio<?php printf($optimism_rows[$i + 1]['tid']); ?>" value="option2">
+                                    <label for="radio<?php printf($optimism_rows[$i + 1]['tid']); ?>">
+                                        <?php printf($optimism_rows[$i + 1]['option2']); ?>
+                                    </label>
+                                    <span class="checkmark"></span>
+                                </label>
+                            </div>
                         </div>
                     </div>
-                    <div class="col">
-                    </div>
+                <?php } ?>
+                <div class="row btn__padding">
+                    <input type="submit" class="c__button" value="SUBMIT" />
                 </div>
-            </div>
+            </form>
         </div>
     </div>
     <script src="js/jquery.quiz.js"></script>
