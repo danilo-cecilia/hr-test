@@ -61,12 +61,19 @@ if (isset($_POST) and !empty($_POST)){
                   <h3>Test Results for '.$_SESSION["first_name"].' '.$_SESSION["last_name"].'</h3>
                   <h3>Applied for the position of '.$_SESSION["position"].'</h3>
                   <h3>Applicant email id '.$_SESSION["email"].'</h3>
-                  <span><u>Calculated Results - </u></span>< \br>
-                  <span>Extroversion (E) - '.$extroversion.'</span>
-                  <span>Agreeableness (A) - '.$agreeableness.'</span>
-                  <span>Conscientiousness (C) - '.$conscientiousness.'</span>
-                  <span>Neuroticism (N) - '.$neuroticism.'</span>
-                  <span>Openness to Experience (O) - '.$openness.'</span>
+                  <span><u>Calculated Results - </u></span>
+
+                  <table cellspacing="0" style="width: auto; height: 100px;">
+                    <tr>
+                        <td style="text-align: left;">Extroversion (E) - '.$extroversion.'</td><td style="text-align: right;margin-right:10px">Neuroticism (N) - '.$neuroticism.'</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Agreeableness (E) - '.$agreeableness.'</td><td style="text-align: right;margin-right:10px">Conscientiousness (C) - '.$conscientiousness.'</td>
+                    </tr>
+                    <tr>
+                        <td style="text-align: left;">Openness to Experience (O) - '.$openness.'</td><td style="text-align: right;margin-right:10px"></td>
+                    </tr>
+                  </table>
 
                   <table cellspacing="0" style="border: 2px dashed #FB4314; width: auto; height: 200px;">
                       <tr style="background-color: #e0e0e0;">
@@ -102,7 +109,6 @@ if (isset($_POST) and !empty($_POST)){
   } else {
       echo "Error: " . $resultSQL . "<br>" . $connection->error;
   }
-  die;
 }
 ?>
 <!DOCTYPE html>
