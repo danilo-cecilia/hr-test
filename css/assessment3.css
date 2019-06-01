@@ -1,48 +1,16 @@
-.container.content {
+.content {
     margin-top: 2%;
     margin-bottom: 2%;
 }
 
-.rating {
-    width: 8%;
-    text-align: center;
-}
-
-table {
-    background: white;
-    margin-bottom: 0px !important;
-}
-
-thead {
-    color: #2a5885;
+.quality {
+    margin-bottom: 1%;
+    padding: 1%;
     background: whitesmoke;
-    border: 2px solid #dee2e6;
-}
-
-th {
-    vertical-align: top !important;
-}
-
-.artistic__select {
-    width: 57px;
-    float: right
-}
-
-.artistic__title {
-    width: 50%;
-    float: left;
+    border-right: 1px solid #dee2e6;;
 }
 
 .words {
     font-size: 12px;
     margin-bottom: 0;
-}
-
-.border__right {
-    border-right: 1px solid #dee2e6;
-    width: 8%
-}
-
-.th__number {
-    width: 3% !important;
 }
