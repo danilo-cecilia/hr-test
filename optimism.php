@@ -69,20 +69,21 @@ if (isset($_POST) and !empty($_POST)) {
                     <div class="row">
                         <div class="col">
                             <div><?php printf($optimism_rows[$i]['question']); ?></div>
+                            <input type="hidden" id="question_<?php echo $optimism_rows[$i]['tid'];?>" name="question[<?php echo $optimism_rows[$i]['tid'];?>]" value="<?php echo $i+1;echo '. '.$optimism_rows[$i]['question'];?>">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio"
-                                    name="q_<?php printf($optimism_rows[$i]['tid']); ?>"
+                                    name="answer[<?php printf($optimism_rows[$i]['tid']); ?>]"
                                     id="radio<?php printf($optimism_rows[$i]['tid']); ?>"
-                                    value="option1">
+                                    value="op1_<?php printf($optimism_rows[$i]['option1']); ?>">
                                 <label class="form-check-label" for="radio<?php printf($optimism_rows[$i]['tid']); ?>">
                                     <?php printf($optimism_rows[$i]['option1']); ?>
                                 </label>
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio"
-                                    name="q_<?php printf($optimism_rows[$i]['tid']); ?>"
+                                    name="answer[<?php printf($optimism_rows[$i]['tid']); ?>]"
                                     id="radio<?php printf($optimism_rows[$i]['tid']); ?>"
-                                    value="option2">
+                                    value="op2_<?php printf($optimism_rows[$i]['option2']); ?>">
                                 <label class="form-check-label" for="radio<?php printf($optimism_rows[$i]['tid']); ?>">
                                     <?php printf($optimism_rows[$i]['option2']); ?>
                                 </label>
@@ -90,11 +91,12 @@ if (isset($_POST) and !empty($_POST)) {
                         </div>
                         <div class="col">
                             <div><?php printf($optimism_rows[$i+1]['question']); ?></div>
+                            <input type="hidden" id="question_<?php echo $optimism_rows[$i+1]['tid'];?>" name="question[<?php echo $optimism_rows[$i+1]['tid'];?>]" value="<?php echo $i+2;echo '. '.$optimism_rows[$i+1]['question'];?>">
                             <div class="form-check">
                                 <input class="form-check-input" type="radio"
-                                    name="q_<?php printf($optimism_rows[$i+1]['tid']); ?>"
+                                    name="answer[<?php printf($optimism_rows[$i+1]['tid']); ?>]"
                                     id="radio<?php printf($optimism_rows[$i+1]['tid']); ?>"
-                                    value="option1">
+                                    value="op1_<?php printf($optimism_rows[$i+1]['option1']); ?>">
                                 <label class="form-check-label"
                                     for="radio<?php printf($optimism_rows[$i+1]['tid']); ?>">
                                     <?php printf($optimism_rows[$i+1]['option1']); ?>
@@ -102,9 +104,9 @@ if (isset($_POST) and !empty($_POST)) {
                             </div>
                             <div class="form-check">
                                 <input class="form-check-input" type="radio"
-                                    name="q_<?php printf($optimism_rows[$i+1]['tid']); ?>"
+                                    name="answer[<?php printf($optimism_rows[$i+1]['tid']); ?>]"
                                     id="radio<?php printf($optimism_rows[$i+1]['tid']); ?>"
-                                    value="option2">
+                                    value="op2_<?php printf($optimism_rows[$i+1]['option2']); ?>">
                                 <label class="form-check-label"
                                     for="radio<?php printf($optimism_rows[$i+1]['tid']); ?>">
                                     <?php printf($optimism_rows[$i+1]['option2']); ?>
