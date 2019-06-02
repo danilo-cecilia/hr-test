@@ -96,7 +96,10 @@ if (isset($_POST) and !empty($_POST)) {
                 <div class="col-3 quality">
                     <div class="row">
                         <div class="col-8">
-                            <p><?php printf($psi_q1[0]); ?></p>
+                            <p>
+                                <?php echo($i+1)."."; ?>
+                                <?php printf($psi_q1[0]); ?>
+                            </p>
                             <p class="words"><?php printf($psi_q1[1]); ?></p>
                             <p class="words"><?php printf($psi_q1[2]); ?></p>
                             <p class="words"><?php printf($psi_q1[3]); ?></p>
