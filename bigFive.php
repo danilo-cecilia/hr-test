@@ -17,7 +17,7 @@ $user_tests_result = mysqli_query($connection, $user_tests_query);
 $user_tests_row = mysqli_fetch_row($user_tests_result);
 
 $user_tests_valid = $user_tests_row[7] + $user_tests_row[8] + $user_tests_row[9];
-if ($user_tests_valid == 0) {
+if ($user_tests_valid == 0 && isset($_SESSION['userid'])) {
     header('Location: thanks.php');
 }
 
