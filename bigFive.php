@@ -97,7 +97,7 @@ if (isset($_POST) and !empty($_POST)){
             <p class="card-text">
                 This is a personality test, it will help you understand why you act the
                 way that you do and how your personality is structured. Please follow
-                the instructions below, scoring and results are on the next page.
+                the instructions below.
             </p>
 
             <h2 class="card-title">Instructions</h2>
@@ -105,6 +105,9 @@ if (isset($_POST) and !empty($_POST)){
                 In the table below, for each statement 1-50 mark how much you agree with
                 on the scale 1-5, where 1=disagree, 2=slightly disagree, 3=neutral,
                 4=slightly agree and 5=agree, in the box to the left of it.
+            </p>
+            <p class="card-text">
+                <b><u>Note</u> - Please attempt all questions before submit. Once you will submit the test, you can not attempt it again.</b>
             </p>
 
             <div class="row">
