@@ -4,7 +4,7 @@
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="MainNav">
-            <a href="#" class="navbar-brand">Personality Test </a>
+            <a href="#" class="navbar-brand"><?php echo($page_title); ?></a>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
                     <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Tests</a>
@@ -15,6 +15,9 @@
                     </div>
                 </li>
             </ul>
+        </div>
+        <div class="navbar-nav">
+            <a class="nav-item nav-link" href="logout.php">Logout</a>
         </div>
     </div>
 </nav>

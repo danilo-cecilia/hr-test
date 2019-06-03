@@ -3,8 +3,8 @@
 session_start();
 if (isset($_SESSION['username'])){
     $username = $_SESSION['username'];
-    echo "Hi - " . $username . ", ";
-    echo "<a href='logout.php'>Logout</a>";
+    // echo "Hi - " . $username . ", ";
+    // echo "<a href='logout.php'>Logout</a>";
 }
 else
 {
@@ -53,6 +53,13 @@ if (isset($_POST) and !empty($_POST)) {
 
     if ($connection->query($save_data) === TRUE) {
         // echo "New record created successfully";
+        // update test taken status for the user
+        $test_status = "UPDATE user SET personality='0' WHERE userid=".$_SESSION["userid"];
+        if ($connection->query($test_status) === TRUE) {
+            // echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
     } else {
         echo "Error: " . $save_data . "<br>" . $connection->error;
     }
@@ -77,6 +84,7 @@ if (isset($_POST) and !empty($_POST)) {
 </head>
 
 <body>
+    <?php $page_title = "Personality"; ?>
     <?php include 'header.php';?>
 
     <div class="container content">
@@ -96,7 +104,10 @@ if (isset($_POST) and !empty($_POST)) {
                 <div class="col-3 quality">
                     <div class="row">
                         <div class="col-8">
-                            <p><?php printf($psi_q1[0]); ?></p>
+                            <p>
+                                <?php echo($i+1)."."; ?>
+                                <?php printf($psi_q1[0]); ?>
+                            </p>
                             <p class="words"><?php printf($psi_q1[1]); ?></p>
                             <p class="words"><?php printf($psi_q1[2]); ?></p>
                             <p class="words"><?php printf($psi_q1[3]); ?></p>
