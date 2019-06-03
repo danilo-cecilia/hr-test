@@ -4,8 +4,8 @@
 session_start();
 if (isset($_SESSION['username'])){
   $username = $_SESSION['username'];
-  echo "Hi - " . $username . ", ";
-  echo "<a href='logout.php'>Logout</a>";
+//   echo "Hi - " . $username . ", ";
+//   echo "<a href='logout.php'>Logout</a>";
 }
 else
 {
@@ -28,6 +28,13 @@ if (isset($_POST) and !empty($_POST)) {
 
     if ($connection->query($save_data) === TRUE) {
         // echo "New record created successfully";
+        // update test taken status for the user
+        $test_status = "UPDATE user SET optimism='0' WHERE userid=".$_SESSION["userid"];
+        if ($connection->query($test_status) === TRUE) {
+            // echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . $conn->error;
+        }
     } else {
         echo "Error: " . $save_data . "<br>" . $connection->error;
     }
@@ -50,6 +57,7 @@ if (isset($_POST) and !empty($_POST)) {
 </head>
 
 <body>
+    <?php $page_title = "Optimism"; ?>
     <?php include 'header.php';?>
 
     <div class="container content">

@@ -3,8 +3,8 @@
 session_start();
 if (isset($_SESSION['username'])){
   $username = $_SESSION['username'];
-  //echo "Hi - " . $username . ", ";
-  //echo "<a href='logout.php'>Logout</a>";
+  // echo "Hi - " . $username . ", ";
+  // echo "<a href='logout.php'>Logout</a>";
 }
 else
 {
@@ -127,6 +127,7 @@ if (isset($_POST) and !empty($_POST)){
 </head>
 
 <body>
+<?php $page_title = "Big Five"; ?>
 <?php include 'header.php';?>
 
   <div class="container content">
