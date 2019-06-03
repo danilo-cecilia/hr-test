@@ -27,7 +27,69 @@ if (isset($_POST) and !empty($_POST)) {
                   VALUES (".$_SESSION["userid"].", '".mysqli_real_escape_string($connection, $results_json)."')";
 
     if ($connection->query($save_data) === TRUE) {
-        // echo "New record created successfully";
+        $inactiveTestSql = "UPDATE user SET optimism='0' WHERE userid=".$_SESSION["userid"];
+
+    if ($connection->query($inactiveTestSql) === TRUE) {
+        // if all tests done send email to HR
+        $checkTestsQuesry = "SELECT personality, bigfive, optimism FROM user WHERE userid = ".$_SESSION["userid"];
+        $result = mysqli_query($connection, $checkTestsQuesry) or die(mysqli_error($connection));
+        $testStatusArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
+
+        //if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
+        //{
+          $to = 'amrik.jabbal@zenabis.com';
+          $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
+          $resultBody = '';
+          
+          foreach ($_POST['answer'] as $key => $value) {
+            
+            $resultBody .= "<tr>
+                              <th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: left;margin-right:10px'>".substr($value, 4)."</td>
+                              <th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: left;margin-right:10px'>".substr($_POST['answer'][$key+1], 4)."</td>
+                          </tr>";
+            
+          }
+          $htmlContent = '
+              <html>
+              <head>
+                  <title>Welcome to Zenabis Global Inc.</title>
+              </head>
+              <body>
+                  <h3>Test Results for '.$_SESSION["first_name"].' '.$_SESSION["last_name"].'</h3>
+                  <h3>Applied for the position of '.$_SESSION["position"].'</h3>
+                  <h3>Applicant email id '.$_SESSION["email"].'</h3>
+
+                  <table cellspacing="0" style="border: 2px dashed #FB4314; width: auto; height: 200px;">
+                      <tr style="background-color: #e0e0e0;">
+                          <th style="text-align: left;">Questions</th><td style="text-align: left;margin-right:10px">Answers</td>
+                          <th style="text-align: left;">Questions</th><td style="text-align: left;margin-right:10px">Answers</td>
+                      </tr>
+                      '.$resultBody.'
+                  </table>
+              </body>
+              </html>';
+
+          // Set content-type header for sending HTML email
+          $headers = "MIME-Version: 1.0" . "\r\n";
+          $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
+
+          // Additional headers
+          $headers .= 'From: Amrik<amrik.zira@gmail.com>' . "\r\n";
+
+          // Send email
+          if(mail($to,$subject,$htmlContent,$headers))
+          {
+            $successMsg = 'Email has sent successfully.';
+          }
+          else
+          {
+            $errorMsg = 'Email sending fail.';
+            echo $errorMsg;
+          }
+        //}
+    } else {
+        echo "Error updating test: " . $connection->error;
+    }
     } else {
         echo "Error: " . $save_data . "<br>" . $connection->error;
     }
