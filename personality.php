@@ -109,15 +109,6 @@ if (isset($_POST) and !empty($_POST)) {
         <p class="card-text">
             - Please rank-order each set of four words. Use each number once in each row.
         </p>
-        <p class="card-text">
-            - Once you have responded to all 16 set of words, total each of the 4 columns by adding the numbers you have placed beside each word.
-        </p>
-        <p class="card-text">
-            - The four columns added together should total 160. If they do not, please check your addition, then make sure each of the four words in each row has one number beside it and that you used 4,3,2 or 1 only once in any row.
-        </p>
-        <p class="card-text">
-            - Once you have confirmed that your four columns total 160, you can submit the test.
-        </p>
     </div>
 
     <?php
