@@ -65,6 +65,9 @@ if (isset($_POST) and !empty($_POST)) {
         $test_status = "UPDATE user SET personality='0' WHERE userid=".$_SESSION["userid"];
         if ($connection->query($test_status) === TRUE) {
             // echo "Record updated successfully";
+            if ($user_tests_valid == 0 && isset($_SESSION['userid'])) {
+                header('Location: sendEmail.php');
+            }
         } else {
             echo "Error updating record: " . $conn->error;
         }

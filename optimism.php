@@ -45,67 +45,8 @@ if (isset($_POST) and !empty($_POST)) {
 
         if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
         {
-          $to = 'amrik.jabbal@zenabis.com';
-          $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
-          $resultBody = '';
-          $classCounnter = 0;
-          for ($key=1; $key <=count($_POST['question']); $key+=2) 
-          { 
-            $classCounnter++;
-            $rowStyle = "";
-            if ($classCounnter%2 == 0) 
-                $rowStyle = "style='background-color: #e0e0e0;'";
-            
-            $resultBody .= "<tr ".$rowStyle.">";
-            if(isset($_POST['answer'][$key]) && $_POST['answer'][$key]!='')
-                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".substr($_POST['answer'][$key], 4)."</td>";
-            else
-                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
-
-            if(isset($_POST['answer'][$key+1]) && $_POST['answer'][$key+1]!='')
-                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>".substr($_POST['answer'][$key+1], 4)."</td>";
-            else
-                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
-            $resultBody .= "</tr>";
-          }
-          
-          $htmlContent = '
-              <html>
-              <head>
-                  <title>Welcome to Zenabis Global Inc.</title>
-              </head>
-              <body>
-                  <h3>Test Results for '.$_SESSION["first_name"].' '.$_SESSION["last_name"].'</h3>
-                  <h3>Applied for the position of '.$_SESSION["position"].'</h3>
-                  <h3>Applicant email id '.$_SESSION["email"].'</h3>
-
-                  <table cellspacing="0" style="border: 2px dashed #FB4314; width: auto; height: 200px;">
-                      <tr style="background-color: #e0e0e0;">
-                          <th style="text-align: left;">Questions</th><td style="text-align: left;margin-right:10px">Answers</td>
-                          <th style="text-align: left;">Questions</th><td style="text-align: left;margin-right:10px">Answers</td>
-                      </tr>
-                      '.$resultBody.'
-                  </table>
-              </body>
-              </html>';
-
-          // Set content-type header for sending HTML email
-          $headers = "MIME-Version: 1.0" . "\r\n";
-          $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-          // Additional headers
-          $headers .= 'From: Amrik<amrik.zira@gmail.com>' . "\r\n";
-
-          // Send email
-          if(mail($to,$subject,$htmlContent,$headers))
-          {
-            header('Location: thanks.php');
-          }
-          else
-          {
-            $errorMsg = 'Email sending fail.';
-            echo $errorMsg;
-          }
+            // Send Email to HR
+            header('Location: sendEmail.php');
         }
     } else {
         echo "Error updating test: " . $connection->error;

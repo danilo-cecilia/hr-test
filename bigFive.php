@@ -48,70 +48,9 @@ if (isset($_POST) and !empty($_POST)){
         $testStatusArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
         if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
         {
-          $to = 'amrik.jabbal@zenabis.com';
-          $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
-          $resultBody = '';
-          
-          foreach ($_POST['rating'] as $key => $value) {
-            if($key<=25)
-            {
-              $resultBody .= "<tr>
-                              <th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".$value."</td>
-                              <th style='text-align: left;'>".$_POST['question'][$key+25]."</th><td style='text-align: center;margin-right:10px'>".$_POST['rating'][$key+25]."</td>
-                          </tr>";
-            }
-          }
-          $htmlContent = '
-              <html>
-              <head>
-                  <title>Welcome to Zenabis Global Inc.</title>
-              </head>
-              <body>
-                  <h3>Test Results for '.$_SESSION["first_name"].' '.$_SESSION["last_name"].'</h3>
-                  <h3>Applied for the position of '.$_SESSION["position"].'</h3>
-                  <h3>Applicant email id '.$_SESSION["email"].'</h3>
-                  <span><u>Calculated Results - </u></span>
-
-                  <table cellspacing="0" style="width: auto; height: 100px;">
-                    <tr>
-                        <td style="text-align: left;">Extroversion (E) - '.$extroversion.'</td><td style="text-align: right;margin-right:10px">Neuroticism (N) - '.$neuroticism.'</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;">Agreeableness (E) - '.$agreeableness.'</td><td style="text-align: right;margin-right:10px">Conscientiousness (C) - '.$conscientiousness.'</td>
-                    </tr>
-                    <tr>
-                        <td style="text-align: left;">Openness to Experience (O) - '.$openness.'</td><td style="text-align: right;margin-right:10px"></td>
-                    </tr>
-                  </table>
-
-                  <table cellspacing="0" style="border: 2px dashed #FB4314; width: auto; height: 200px;">
-                      <tr style="background-color: #e0e0e0;">
-                          <th style="text-align: left;">Questions</th><td style="text-align: right;margin-right:10px">Answers</td>
-                          <th style="text-align: left;">Questions</th><td style="text-align: right;margin-right:10px">Answers</td>
-                      </tr>
-                      '.$resultBody.'
-                  </table>
-              </body>
-              </html>';
-
-          // Set content-type header for sending HTML email
-          $headers = "MIME-Version: 1.0" . "\r\n";
-          $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
-
-          // Additional headers
-          $headers .= 'From: Amrik<amrik.zira@gmail.com>' . "\r\n";
-
-          // Send email
-          if(mail($to,$subject,$htmlContent,$headers))
-          {
-            $successMsg = 'Email has sent successfully.';
-          }
-          else
-          {
-            $errorMsg = 'Email sending fail.';
-            echo $errorMsg;
-          }
-      }
+          // Send Email to HR
+          header('Location: sendEmail.php');
+        }
     } else {
         echo "Error updating test: " . $connection->error;
     }
