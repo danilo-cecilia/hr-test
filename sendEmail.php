@@ -166,7 +166,7 @@ $bigFive_answers = json_decode($bigFive_row[7]);
     $headers .= "Content-type:text/html;charset=UTF-8" . "\r\n";
 
     // Additional headers
-    $headers .= 'From: Amrik<amrik.zira@gmail.com>' . "\r\n";
+    $headers .= 'From: HRZenabis@app.zenabis.com' . "\r\n";
 
     // Send email
     if(mail($to,$subject,$finalEmailBody,$headers))
