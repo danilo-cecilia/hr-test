@@ -48,10 +48,15 @@ if (isset($_POST) and !empty($_POST)) {
           $to = 'amrik.jabbal@zenabis.com';
           $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
           $resultBody = '';
-          
+          $classCounnter = 0;
           for ($key=1; $key <=count($_POST['question']); $key+=2) 
           { 
-            $resultBody .= "<tr>";
+            $classCounnter++;
+            $rowStyle = "";
+            if ($classCounnter%2 == 0) 
+                $rowStyle = "style='background-color: #e0e0e0;'";
+            
+            $resultBody .= "<tr ".$rowStyle.">";
             if(isset($_POST['answer'][$key]) && $_POST['answer'][$key]!='')
                 $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".substr($_POST['answer'][$key], 4)."</td>";
             else
@@ -63,6 +68,7 @@ if (isset($_POST) and !empty($_POST)) {
                 $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
             $resultBody .= "</tr>";
           }
+          
           $htmlContent = '
               <html>
               <head>

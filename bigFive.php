@@ -46,8 +46,8 @@ if (isset($_POST) and !empty($_POST)){
         $checkTestsQuesry = "SELECT personality, bigfive, optimism FROM user WHERE userid = ".$_SESSION["userid"];
         $result = mysqli_query($connection, $checkTestsQuesry) or die(mysqli_error($connection));
         $testStatusArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
-        //if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
-        //{
+        if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
+        {
           $to = 'amrik.jabbal@zenabis.com';
           $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
           $resultBody = '';
@@ -111,7 +111,7 @@ if (isset($_POST) and !empty($_POST)){
             $errorMsg = 'Email sending fail.';
             echo $errorMsg;
           }
-        //}
+      }
     } else {
         echo "Error updating test: " . $connection->error;
     }
