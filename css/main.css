@@ -117,3 +117,8 @@ input {
 .c__button:hover {
   background-color: #198d98;
 }
+
+.content {
+  margin-top: 2%;
+  margin-bottom: 2%;
+}

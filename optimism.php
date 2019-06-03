@@ -14,11 +14,19 @@ else
 
 require('dbConnect.php');
 
-mysqli_set_charset($connection,"utf8");
 $optimism_query = "SELECT * FROM `optimismqa` ";
 $optimism_result = mysqli_query($connection, $optimism_query);
 $optimism_num_rows = mysqli_num_rows($optimism_result);
 $optimism_rows = mysqli_fetch_all($optimism_result, MYSQLI_ASSOC);
+
+$user_tests_query = "SELECT * FROM `user` WHERE userid =".$_SESSION['userid'].";";
+$user_tests_result = mysqli_query($connection, $user_tests_query);
+$user_tests_row = mysqli_fetch_row($user_tests_result);
+
+$user_tests_valid = $user_tests_row[7] + $user_tests_row[8] + $user_tests_row[9];
+if ($user_tests_valid == 0) {
+    header('Location: thanks.php');
+}
 
 if (isset($_POST) and !empty($_POST)) {
     $results_json = json_encode($_POST);
@@ -38,6 +46,8 @@ if (isset($_POST) and !empty($_POST)) {
     } else {
         echo "Error: " . $save_data . "<br>" . $connection->error;
     }
+    // Refresh the page on submit
+    echo("<meta http-equiv='refresh' content='0'>");
 }
 
 ?>
@@ -63,6 +73,14 @@ if (isset($_POST) and !empty($_POST)) {
     <div class="container content">
         <h2 class="card-title">Learned Optimism Test</h2>
     </div>
+
+    <?php
+    if ($user_tests_row[9] == 0) {
+    ?>
+    <div class="container content">
+        <h2>You have completed this test.</br>Please select another one from the drop down menu.</h2>
+    </div>
+    <?php } else { ?>
 
     <div class="container content">
         <?php
@@ -131,6 +149,8 @@ if (isset($_POST) and !empty($_POST)) {
             </div>
         </form>
     </div>
+
+    <?php } ?>
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
