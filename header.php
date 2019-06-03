@@ -7,11 +7,11 @@
             <a href="#" class="navbar-brand"><?php echo($page_title); ?></a>
             <ul class="navbar-nav">
                 <li class="nav-item dropdown">
-                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Tests</a>
+                    <a class="nav-link dropdown-toggle" data-toggle="dropdown" href="#">Select a Test</a>
                     <div class="dropdown-menu">
-                        <a href="bigFive.php" class="dropdown-item">Test 1</a>
-                        <a href="personality.php" class="dropdown-item">Test 2</a>
-                        <a href="optimism.php" class="dropdown-item">Test 3</a>
+                        <a href="bigFive.php" class="dropdown-item">Big Five</a>
+                        <a href="personality.php" class="dropdown-item">Personality</a>
+                        <a href="optimism.php" class="dropdown-item">Optimism</a>
                     </div>
                 </li>
             </ul>
