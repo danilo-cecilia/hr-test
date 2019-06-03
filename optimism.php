@@ -35,19 +35,25 @@ if (isset($_POST) and !empty($_POST)) {
         $result = mysqli_query($connection, $checkTestsQuesry) or die(mysqli_error($connection));
         $testStatusArr = mysqli_fetch_all($result, MYSQLI_ASSOC);
 
-        //if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
-        //{
+        if($testStatusArr[0]['personality'] == '0' && $testStatusArr[0]['bigfive'] == '0' && $testStatusArr[0]['optimism'] == '0')
+        {
           $to = 'amrik.jabbal@zenabis.com';
           $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
           $resultBody = '';
           
-          foreach ($_POST['answer'] as $key => $value) {
-            
-            $resultBody .= "<tr>
-                              <th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: left;margin-right:10px'>".substr($value, 4)."</td>
-                              <th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: left;margin-right:10px'>".substr($_POST['answer'][$key+1], 4)."</td>
-                          </tr>";
-            
+          for ($key=1; $key <=count($_POST['question']); $key+=2) 
+          { 
+            $resultBody .= "<tr>";
+            if(isset($_POST['answer'][$key]) && $_POST['answer'][$key]!='')
+                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".substr($_POST['answer'][$key], 4)."</td>";
+            else
+                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
+
+            if(isset($_POST['answer'][$key+1]) && $_POST['answer'][$key+1]!='')
+                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>".substr($_POST['answer'][$key+1], 4)."</td>";
+            else
+                $resultBody .= "<th style='text-align: left;'>".$_POST['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
+            $resultBody .= "</tr>";
           }
           $htmlContent = '
               <html>
@@ -79,14 +85,14 @@ if (isset($_POST) and !empty($_POST)) {
           // Send email
           if(mail($to,$subject,$htmlContent,$headers))
           {
-            $successMsg = 'Email has sent successfully.';
+            header('Location: thanks.php');
           }
           else
           {
             $errorMsg = 'Email sending fail.';
             echo $errorMsg;
           }
-        //}
+        }
     } else {
         echo "Error updating test: " . $connection->error;
     }
