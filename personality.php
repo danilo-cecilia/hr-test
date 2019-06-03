@@ -107,7 +107,7 @@ if (isset($_POST) and !empty($_POST)) {
         </p>
         <h2 class="card-title">Instructions</h2>
         <p class="card-text">
-            - Please renk-order each set of four words. Use each number once in each row.
+            - Please rank-order each set of four words. Use each number once in each row.
         </p>
         <p class="card-text">
             - Once you have responded to all 16 set of words, total each of the 4 columns by adding the numbers you have placed beside each word.
