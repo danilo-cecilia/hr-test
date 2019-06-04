@@ -123,7 +123,8 @@ if (isset($_POST) and !empty($_POST)) {
         </p>
         <h2 class="card-title">Instructions</h2>
         <p class="card-text">
-            Example: Please rank-order each set of four red words, as shown in the example below. <b>Use each number only once in each row.</b>
+            Example: Please rank-order each set of four red words, as shown in the example below. <b>Use each number
+                only once in each row.</b>
         </p>
     </div>
 
@@ -316,6 +317,41 @@ if (isset($_POST) and !empty($_POST)) {
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
     <script src="js/main.js"></script>
+    <script>
+    $(document).ready(function() {
+        $("select").change(function(e) {
+            var optionArray = ["1", "2", "3", "4"];
+
+            id = $(this).attr('id');
+
+            column = id.substring(0, id.length - 1);
+            for (let i = 1; i < 5; i++) {
+                col = "#" + column + i;
+                existing_value = $(col).children("option:selected").val();
+                var index = optionArray.indexOf(existing_value);
+                if (index > -1) {
+                    optionArray.splice(index, 1);
+                }
+            }
+            for (let i = 1; i < 5; i++) {
+                col = "#" + column + i;
+
+                existing_value = $(col).children("option:selected").val();
+                $(col).find('option').remove().end();
+                if (existing_value > 0) {
+                    $(col).append('<option>' + existing_value + '</option>').val(existing_value);
+                    $(col).append('<option></option>');
+
+                } else {
+                    $(col).append('<option></option>').val('');
+                }
+                optionArray.forEach(function(value) {
+                    $(col).append('<option>' + value + '</option>');
+                });
+            }
+        });
+    });
+    </script>
 </body>
 
 </html>
