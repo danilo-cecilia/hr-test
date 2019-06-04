@@ -12,12 +12,9 @@ $(document).ready(function () {
 
             display.textContent = minutes + ":" + seconds;
             localStorage.setItem(userId + 'zenTest', --timer);
+            $('input[name="timer"]').val(timer);
 
             if (timer < 0) {
-                // timer = duration;
-
-                // alert("Time Up " + phpadd());
-                // localStorage.removeItem('testTime');
                 $("#testForm").submit();
                 localStorage.setItem(userId + 'zenTest', 0);
                 stopTimer(interval);
@@ -34,7 +31,6 @@ $(document).ready(function () {
 
     if (localStorage.getItem(userId + 'zenTest')) {
         localStorage.getItem(userId + 'zenTest');
-        // alert(userId);
         startTimer(display);
     } else {
         localStorage.setItem(userId + 'zenTest', fiveMinutes);

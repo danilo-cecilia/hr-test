@@ -21,11 +21,6 @@ if ($user_tests_valid == 0 && isset($_SESSION['userid'])) {
     header('Location: thanks.php');
 }
 
-function add($a,$b) {
-    $c=$a+$b;
-    return $c;
-}
-
 if (isset($_POST) and !empty($_POST)){
   $resultsJSON = json_encode($_POST);
   
@@ -62,6 +57,17 @@ if (isset($_POST) and !empty($_POST)){
   } else {
       echo "Error: " . $resultSQL . "<br>" . $connection->error;
   }
+    
+  if ($_POST['timer'] <= 0) {
+        $complete_test_query = "UPDATE user SET personality='0', optimism='0' WHERE userid=".$_SESSION["userid"];
+
+        if ($connection->query($complete_test_query) === TRUE) {
+            // echo "Record updated successfully";
+        } else {
+            echo "Error updating record: " . $connection->error;
+        }
+    }
+
   // Refresh the page on submit
   echo("<meta http-equiv='refresh' content='0'>");
 }
@@ -80,10 +86,6 @@ if (isset($_POST) and !empty($_POST)){
 
     <script>
     var userId = "<?php echo($_SESSION['userid']); ?>";
-    function phpadd() {
-        var phpadd = "<?php echo add(1,2);?>"; //call the php add function;
-        return phpadd;
-    }
     </script>
 
     <title>Assessment Personality Test</title>
@@ -120,7 +122,8 @@ if (isset($_POST) and !empty($_POST)){
                 4=slightly agree and 5=agree, in the box to the left of it.
             </p>
             <p class="card-text">
-                <b><u>Note</u> - Please attempt all questions before submit. Once you will submit the test, you can not attempt it again.</b>
+                <b><u>Note</u> - Please attempt all questions before submit. Once you will submit the test, you can not
+                    attempt it again.</b>
             </p>
 
             <div class="row">
@@ -187,6 +190,7 @@ if (isset($_POST) and !empty($_POST)){
             </div>
             <div class="row">
                 <div class="col-sm">
+                    <input type="hidden" id="timer" name="timer" value="">
                     <input type="submit" class="c__button" value="SUBMIT" />
                 </div>
             </div>
