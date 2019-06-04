@@ -29,7 +29,7 @@ $(document).ready(function () {
         clearInterval(interval);
     }
 
-    var fiveMinutes = 20 * 1,
+    var fiveMinutes = 60 * 50,
         display = document.querySelector('#time');
 
     if (localStorage.getItem(userId + 'zenTest')) {

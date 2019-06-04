@@ -119,7 +119,7 @@ if (isset($_POST) and !empty($_POST)) {
         </p>
         <h2 class="card-title">Instructions</h2>
         <p class="card-text">
-            Please rank-order each set of four words. Use each number once in each row.
+            Example: Please rank-order each set of four red words, as shown in the example below. <b>Use each number only once in each row.</b>
         </p>
     </div>
 
@@ -132,6 +132,80 @@ if (isset($_POST) and !empty($_POST)) {
     <?php } else { ?>
 
     <div class="container content">
+        <!-- Example code starts here -->
+        <p>Example:</p>
+        <hr>
+        <div class="row">
+            <div class="col-3 quality">
+                <div class="row">
+                    <div class="col-8">
+                        <p style="color:red;"><b>Artistic</b></p>
+                    </div>
+                    <div class="col-4">
+                        <select name="example_1" id="example_1" class="form-control" disabled>
+                            <option value="0"></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3" selected>3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 quality">
+                <div class="row">
+                    <div class="col-8">
+                        <p style="color:red;"><b>Technical</b></p>
+                        <p class="words">(Most like me)</p>
+                    </div>
+                    <div class="col-4">
+                        <select name="example_2" id="example_2" class="form-control" disabled>
+                            <option value="0"></option>
+                            <option value="1">1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4" selected>4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 quality">
+                <div class="row">
+                    <div class="col-8">
+                        <p style="color:red;"><b>Productive</b></p>
+                        <p class="words">(Least like me)</p>
+                    </div>
+                    <div class="col-4">
+                        <select name="example_3" id="example_3" class="form-control" disabled>
+                            <option value="0"></option>
+                            <option value="1" selected>1</option>
+                            <option value="2">2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+            <div class="col-3 quality">
+                <div class="row">
+                    <div class="col-8">
+                        <p style="color:red;"><b>Supportive</b></p>
+                    </div>
+                    <div class="col-4">
+                        <select name="example_4" id="example_4" class="form-control" disabled>
+                            <option value="0"></option>
+                            <option value="1">1</option>
+                            <option value="2" selected>2</option>
+                            <option value="3">3</option>
+                            <option value="4">4</option>
+                        </select>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <hr>
+        <!-- Example code ends here -->
+
         <?php
         for ($i=0; $i < $psi_num_rows; $i++) {
             $psi_q1 = explode(',', $psi_rows[$i]['p1']);
@@ -140,7 +214,7 @@ if (isset($_POST) and !empty($_POST)) {
             $psi_q4 = explode(',', $psi_rows[$i]['p4']);
         ?>
         <form id="testForm" method="post">
-            <div class="row">
+            <div class="row q_<?php printf($i+1); ?>">
                 <div class="col-3 quality">
                     <div class="row">
                         <div class="col-8">
@@ -154,7 +228,7 @@ if (isset($_POST) and !empty($_POST)) {
                         </div>
                         <div class="col-4">
                             <select name="<?php printf($psi_q1[0]); ?>_c1" id="q_<?php printf($i+1); ?>_c1"
-                                class="form-control">
+                                class="form-control dropdown">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -174,7 +248,7 @@ if (isset($_POST) and !empty($_POST)) {
                         </div>
                         <div class="col-4">
                             <select name="<?php printf($psi_q2[0]); ?>_c2" id="q_<?php printf($i+1); ?>_c2"
-                                class="form-control">
+                                class="form-control dropdown">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -194,7 +268,7 @@ if (isset($_POST) and !empty($_POST)) {
                         </div>
                         <div class="col-4">
                             <select name="<?php printf($psi_q3[0]); ?>_c3" id="q_<?php printf($i+1); ?>_c3"
-                                class="form-control">
+                                class="form-control dropdown">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
@@ -214,7 +288,7 @@ if (isset($_POST) and !empty($_POST)) {
                         </div>
                         <div class="col-4">
                             <select name="<?php printf($psi_q4[0]); ?>_c4" id="q_<?php printf($i+1); ?>_c4"
-                                class="form-control">
+                                class="form-control dropdown">
                                 <option value="0"></option>
                                 <option value="1">1</option>
                                 <option value="2">2</option>
