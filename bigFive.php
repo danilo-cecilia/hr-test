@@ -93,7 +93,7 @@ if (isset($_POST) and !empty($_POST)){
     <?php $page_title = "Big Five"; ?>
     <?php include 'header.php';?>
 
-    <div class="container content">
+    <div class="container content-main">
         <h2 class="card-title">Introduction to The Big Five Personality Test</h2>
     </div>
 

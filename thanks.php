@@ -19,7 +19,7 @@ session_start();
     <?php $page_title = "Tests Completed"; ?>
     <?php include 'header.php';?>
 
-    <div class="container content">
+    <div class="container content-main">
         <h2 class="card-title">Thank You !</h2>
     </div>
 

@@ -115,7 +115,7 @@ if (isset($_POST) and !empty($_POST)) {
     <?php $page_title = "Personality"; ?>
     <?php include 'header.php';?>
 
-    <div class="container content">
+    <div class="container content-main">
         <h2 class="card-title">Personal Style Indicator</h2>
         <p class="card-text">
             <b><u>Note</u> - Please attempt all questions before submit. Once you will submit the test, you can not
