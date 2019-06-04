@@ -85,27 +85,31 @@ $bigFive_answers = json_decode($bigFive_row[7]);
         $resultBodyOptimism = '';
         $classCounnter = 0;
         $optimism_answers =  json_decode(json_encode($optimism_answers), true);
-        
-        for ($key=1; $key <=count($optimism_answers['question']); $key+=2) 
-        { 
-            $classCounnter++;
-            $rowStyle = "";
-            if ($classCounnter%2 == 0) 
-                $rowStyle = "style='background-color: #e0e0e0;'";
-            
-            $resultBodyOptimism .= "<tr ".$rowStyle.">";
-            if(isset($optimism_answers['answer'][$key]) && $optimism_answers['answer'][$key]!='')
-                $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".substr($optimism_answers['answer'][$key], 4)."</td>";
-            else
-                $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
+        if (!isset($optimism_answers)) {
+            $resultBodyOptimism .= "<tr><td>No records found for Optimism Test</td></tr>";
+        } 
+        else
+        {
+            for ($key=1; $key <=count($optimism_answers['question']); $key+=2) 
+            { 
+                $classCounnter++;
+                $rowStyle = "";
+                if ($classCounnter%2 == 0) 
+                    $rowStyle = "style='background-color: #e0e0e0;'";
+                
+                $resultBodyOptimism .= "<tr ".$rowStyle.">";
+                if(isset($optimism_answers['answer'][$key]) && $optimism_answers['answer'][$key]!='')
+                    $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".substr($optimism_answers['answer'][$key], 4)."</td>";
+                else
+                    $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
 
-            if(isset($optimism_answers['answer'][$key+1]) && $optimism_answers['answer'][$key+1]!='')
-                $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>".substr($optimism_answers['answer'][$key+1], 4)."</td>";
-            else
-                $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
-            $resultBodyOptimism .= "</tr>";
+                if(isset($optimism_answers['answer'][$key+1]) && $optimism_answers['answer'][$key+1]!='')
+                    $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>".substr($optimism_answers['answer'][$key+1], 4)."</td>";
+                else
+                    $resultBodyOptimism .= "<th style='text-align: left;'>".$optimism_answers['question'][$key+1]."</th><td style='text-align: center;margin-right:10px'>No answer selected</td>";
+                $resultBodyOptimism .= "</tr>";
+            }
         }
-        
         $htmlContentOptimism = '<h3>Optimism test results</h3>
             <table cellspacing="0" style="border: 2px dashed #FB4314; width: auto; height: 200px;">
                 <tr style="background-color: #e0e0e0;">
@@ -122,14 +126,19 @@ $bigFive_answers = json_decode($bigFive_row[7]);
         <?php
         $resultBodyBigFive = '';
         $bigFive_answers =  json_decode(json_encode($bigFive_answers), true);
-        
-        foreach ($bigFive_answers['rating'] as $key => $value) {
-            if($key<=25)
-            {
-                $resultBodyBigFive .= "<tr>
-                                <th style='text-align: left;'>".$bigFive_answers['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".$value."</td>
-                                <th style='text-align: left;'>".$bigFive_answers['question'][$key+25]."</th><td style='text-align: center;margin-right:10px'>".$bigFive_answers['rating'][$key+25]."</td>
-                            </tr>";
+        if (!isset($bigFive_answers)) {
+            $resultBodyBigFive .= "<tr><td>No records found for Big Five Test</td></tr>";
+        } 
+        else
+        {
+            foreach ($bigFive_answers['rating'] as $key => $value) {
+                if($key<=25)
+                {
+                    $resultBodyBigFive .= "<tr>
+                                    <th style='text-align: left;'>".$bigFive_answers['question'][$key]."</th><td style='text-align: center;margin-right:10px'>".$value."</td>
+                                    <th style='text-align: left;'>".$bigFive_answers['question'][$key+25]."</th><td style='text-align: center;margin-right:10px'>".$bigFive_answers['rating'][$key+25]."</td>
+                                </tr>";
+                }
             }
         }
         $htmlContentBigFive = '<h3>Big Five test results</h3>
