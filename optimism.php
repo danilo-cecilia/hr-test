@@ -28,6 +28,11 @@ if ($user_tests_valid == 0 && isset($_SESSION['userid'])) {
     header('Location: thanks.php');
 }
 
+function add($a,$b) {
+    $c=$a+$b;
+    return $c;
+}
+
 if (isset($_POST) and !empty($_POST)) {
     $results_json = json_encode($_POST);
 
@@ -72,6 +77,13 @@ if (isset($_POST) and !empty($_POST)) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/assessment2.css" />
+    <script>
+    var userId = "<?php echo($_SESSION['userid']); ?>";
+    function phpadd() {
+        var phpadd = "<?php echo add(1,2);?>"; //call the php add function;
+        return phpadd;
+    }
+    </script>
 </head>
 
 <body>
@@ -97,7 +109,7 @@ if (isset($_POST) and !empty($_POST)) {
         <?php
             for ($i=0; $i < $optimism_num_rows; $i+=2) {
         ?>
-        <form method="post">
+        <form id="testForm" method="post">
             <div class="row">
                 <div class="col-6 quality">
                     <div>
@@ -165,6 +177,7 @@ if (isset($_POST) and !empty($_POST)) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

@@ -17,6 +17,9 @@
             </ul>
         </div>
         <div class="navbar-nav">
+            <a class="nav-item nav-link">Time remaining: <span id="time">00:00</span></a>
+        </div>
+        <div class="navbar-nav">
             <a class="nav-item nav-link" href="logout.php">Logout</a>
         </div>
     </div>

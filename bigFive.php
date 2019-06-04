@@ -21,6 +21,11 @@ if ($user_tests_valid == 0 && isset($_SESSION['userid'])) {
     header('Location: thanks.php');
 }
 
+function add($a,$b) {
+    $c=$a+$b;
+    return $c;
+}
+
 if (isset($_POST) and !empty($_POST)){
   $resultsJSON = json_encode($_POST);
   
@@ -73,6 +78,14 @@ if (isset($_POST) and !empty($_POST)){
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/assessment1.css" />
 
+    <script>
+    var userId = "<?php echo($_SESSION['userid']); ?>";
+    function phpadd() {
+        var phpadd = "<?php echo add(1,2);?>"; //call the php add function;
+        return phpadd;
+    }
+    </script>
+
     <title>Assessment Personality Test</title>
 </head>
 
@@ -93,7 +106,7 @@ if (isset($_POST) and !empty($_POST)){
     <?php } else { ?>
 
     <div class="container content">
-        <form method="POST">
+        <form id="testForm" method="POST">
             <p class="card-text">
                 This is a personality test, it will help you understand why you act the
                 way that you do and how your personality is structured. Please follow
@@ -185,6 +198,7 @@ if (isset($_POST) and !empty($_POST)){
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>

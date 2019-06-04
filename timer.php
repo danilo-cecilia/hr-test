@@ -20,60 +20,37 @@ function add($a,$b){
         alert(phpadd);
     }
 
-    var status = 0;
-    var time = 0;
+    function startTimer(duration, display) {
+        var timer = duration,
+            minutes, seconds;
+        setInterval(function() {
+            minutes = parseInt(timer / 60, 10);
+            seconds = parseInt(timer % 60, 10);
 
-    function stop() {
-        status = 0;
+            minutes = minutes < 10 ? "0" + minutes : minutes;
+            seconds = seconds < 10 ? "0" + seconds : seconds;
 
+            display.textContent = minutes + ":" + seconds;
 
-    }
-
-    function reset() {
-        status = 0;
-        time = 0;
-        document.getElementById("timerLabel").innerHTML = "00:00:00";
-    }
-
-    function timer() {
-        if (status == 1) {
-            setTimeout(function() {
-                time++;
-                var min = Math.floor(time / 100 / 60);
-                var sec = Math.floor(time / 100);
-                var mSec = time % 100;
-
-                if (min < 10) {
-                    min = "0" + min;
-                }
-
-                if (sec >= 60) {
-                    sec = sec % 60;
-                }
-
-                if (sec < 10) {
-                    sec = "0" + sec;
-
-                }
-
-                document.getElementById("timerLabel").innerHTML = min + ":" + sec + ":" + mSec;
-                timer();
-
-            }, 10);
-        }
+            if (--timer < 0) {
+                timer = duration;
+                phpadd();
+            }
+        }, 1000);
     }
     </script>
 </head>
 
 <body>
     <button onclick='phpadd()'>add</button>
-    <h1 id="timerLabel">00:00:00</h1>
+    <div>Registration closes in <span id="time">05:00</span> minutes!</div>
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script>
     $(document).ready(function() {
-        status = 1;
-        timer();
+        var fiveMinutes = 60 * 0.1,
+            display = document.querySelector('#time');
+        startTimer(fiveMinutes, display);
     });
     </script>
 </body>

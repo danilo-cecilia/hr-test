@@ -27,6 +27,11 @@ if ($user_tests_valid == 0 && isset($_SESSION['userid'])) {
     header('Location: thanks.php');
 }
 
+function add($a,$b) {
+    $c=$a+$b;
+    return $c;
+}
+
 if (isset($_POST) and !empty($_POST)) {
     $results_json = json_encode($_POST);
     $column1 = 0;
@@ -92,6 +97,13 @@ if (isset($_POST) and !empty($_POST)) {
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css" />
     <link rel="stylesheet" href="css/main.css" />
     <link rel="stylesheet" href="css/assessment3.css" />
+    <script>
+    var userId = "<?php echo($_SESSION['userid']); ?>";
+    function phpadd() {
+        var phpadd = "<?php echo add(1,2);?>"; //call the php add function;
+        return phpadd;
+    }
+    </script>
 
     <title>Personal Style Indicator</title>
 </head>
@@ -127,7 +139,7 @@ if (isset($_POST) and !empty($_POST)) {
             $psi_q3 = explode(',', $psi_rows[$i]['p3']);
             $psi_q4 = explode(',', $psi_rows[$i]['p4']);
         ?>
-        <form method="post">
+        <form id="testForm" method="post">
             <div class="row">
                 <div class="col-3 quality">
                     <div class="row">
@@ -224,6 +236,7 @@ if (isset($_POST) and !empty($_POST)) {
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"></script>
+    <script src="js/main.js"></script>
 </body>
 
 </html>
