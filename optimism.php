@@ -60,6 +60,7 @@ if (isset($_POST) and !empty($_POST)) {
 
         if ($connection->query($complete_test_query) === TRUE) {
             // echo "Record updated successfully";
+            header('Location: sendEmail.php');
         } else {
             echo "Error updating record: " . $connection->error;
         }
