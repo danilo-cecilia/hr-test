@@ -36,7 +36,7 @@ $bigFive_answers = json_decode($bigFive_row[7]);
 
 <body>
     <div id="personality">
-        
+
         <?php
         $resultBodyPersonality = '';
         $htmlContentPersonality = '';
@@ -46,17 +46,20 @@ $bigFive_answers = json_decode($bigFive_row[7]);
             $resultBodyPersonality = "<tr>";
             $classCounnter = 0;
             foreach ($answers as $key => $value) {
-                $col = substr($key, -1);
-                $rowStyle = "";
-                if ($classCounnter%2 == 0) 
-                    $rowStyle = "style='background-color: #e0e0e0;'";
-                if ($col == 4) {
-                    $resultBodyPersonality .= "<td ".$rowStyle.">". substr($key, 0, -3) . "</td>";
-                    $resultBodyPersonality .= "<td ".$rowStyle.">". $value. "</td></tr>";
-                    $classCounnter++;
-                } else {
-                    $resultBodyPersonality .= "<td ".$rowStyle.">" . substr($key, 0, -3) . "</td>";
-                    $resultBodyPersonality .= "<td ".$rowStyle.">". $value. "</td>";
+                if($key != "timer")
+                {
+                    $col = substr($key, -1);
+                    $rowStyle = "";
+                    if ($classCounnter%2 == 0) 
+                        $rowStyle = "style='background-color: #e0e0e0;'";
+                    if ($col == 4) {
+                        $resultBodyPersonality .= "<td ".$rowStyle.">". substr($key, 0, -3) . "</td>";
+                        $resultBodyPersonality .= "<td ".$rowStyle.">". $value. "</td></tr>";
+                        $classCounnter++;
+                    } else {
+                        $resultBodyPersonality .= "<td ".$rowStyle.">" . substr($key, 0, -3) . "</td>";
+                        $resultBodyPersonality .= "<td ".$rowStyle.">". $value. "</td>";
+                    }
                 }
             }   
         } 
@@ -80,7 +83,7 @@ $bigFive_answers = json_decode($bigFive_row[7]);
         ?>
     </div>
     <div id="optimism">
-        
+
         <?php
         $resultBodyOptimism = '';
         $classCounnter = 0;
@@ -122,7 +125,7 @@ $bigFive_answers = json_decode($bigFive_row[7]);
     ?>
     </div>
     <div id="bigFive">
-        
+
         <?php
         $resultBodyBigFive = '';
         $bigFive_answers =  json_decode(json_encode($bigFive_answers), true);
@@ -166,7 +169,7 @@ $bigFive_answers = json_decode($bigFive_row[7]);
     </div>
 
     <?php
-    $to = 'amrik.jabbal@zenabis.com, martin.dufficy@zenabis.com';
+    $to = 'amrik.jabbal@zenabis.com';
     $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
     $headingBody = "<h3>Position applied for - ".$_SESSION['position']."</h3>";
     $headingBody .= "<h3>Email on CV - ".$_SESSION['email']."</h3>";
