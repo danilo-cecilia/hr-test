@@ -169,7 +169,7 @@ $bigFive_answers = json_decode($bigFive_row[7]);
     </div>
 
     <?php
-    $to = 'amrik.jabbal@zenabis.com';
+    $to = 'amrik.jabbal@zenabis.com, martin.dufficy@zenabis.com';
     $subject = "Test Results for ".$_SESSION["first_name"]." ".$_SESSION["last_name"];
     $headingBody = "<h3>Position applied for - ".$_SESSION['position']."</h3>";
     $headingBody .= "<h3>Email on CV - ".$_SESSION['email']."</h3>";
